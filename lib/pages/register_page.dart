@@ -1,3 +1,4 @@
+import 'package:chat_app/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
 import '../components/my_button.dart';
@@ -6,14 +7,39 @@ import '../components/my_textfield.dart';
 class RegisterPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   final void Function()? onTap;
 
   RegisterPage({super.key, this.onTap});
 
-  void register() {
-    print("register");
+  void register(BuildContext context) {
+    // get auth service
+    final _auth = AuthService();
+
+    // password match -> create user
+    if (_passwordController.text == _confirmPasswordController.text) {
+      try {
+        _auth.signUpWithEmailPassword(
+            _emailController.text, _passwordController.text);
+      } catch (e) {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text(e.toString()),
+                ));
+      }
+    }
+
+    // password don't match -> show error
+    else {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Passwords don't match"),
+          ));
+    }
   }
 
   @override
@@ -74,7 +100,10 @@ class RegisterPage extends StatelessWidget {
             ),
 
             // login button
-            MyButton(text: "Login",onTap: register,),
+            MyButton(
+              text: "Register",
+              onTap: () => register(context),
+            ),
 
             const SizedBox(
               height: 25,
@@ -90,7 +119,7 @@ class RegisterPage extends StatelessWidget {
                 GestureDetector(
                   onTap: onTap,
                   child: Text(
-                    "Register now",
+                    "Login now",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.primary),
