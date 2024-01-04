@@ -7,7 +7,14 @@ class LoginPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  LoginPage({super.key});
+  final void Function()? onTap;
+
+  LoginPage({super.key, this.onTap});
+
+  void login(){
+    // login the user
+    print("LOGINNNNNNNNNN");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +65,7 @@ class LoginPage extends StatelessWidget {
             ),
 
             // login button
-            MyButton(text: "Login"),
+            MyButton(text: "Login",onTap: login,),
 
             const SizedBox(
               height: 25,
@@ -71,11 +78,14 @@ class LoginPage extends StatelessWidget {
                 Text("Not a member ? ",
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.primary)),
-                Text(
-                  "Register now",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary),
+                GestureDetector(
+                  onTap: onTap,
+                  child: Text(
+                    "Register now",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary),
+                  ),
                 ),
               ],
             ),
