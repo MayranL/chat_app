@@ -1,3 +1,4 @@
+import 'package:chat_app/components/my_drawer.dart';
 import 'package:chat_app/services/auth/auth_service.dart';
 import 'package:chat_app/services/chat/chat_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,19 +11,13 @@ class HomePage extends StatelessWidget {
   final ChatService _chatService = ChatService();
   final AuthService _authService = AuthService();
 
-  void logout() {
-    // get auth service
-    final _authService = AuthService();
-    _authService.signOut();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Home"),
-      actions: [
-        IconButton(icon: Icon(Icons.logout), onPressed: logout,)
-      ],),
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      ),
+      drawer: MyDrawer(),
     );
   }
 }
