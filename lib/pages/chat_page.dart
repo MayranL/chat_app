@@ -55,8 +55,8 @@ class _ChatPageState extends State<ChatPage> {
   final ScrollController _scrollController = ScrollController();
 
   void scrollDown() {
-    _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-        duration: const Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+    _scrollController.animateTo(_scrollController.position.maxScrollExtent + 100,
+        duration: const Duration(milliseconds: 200), curve: Curves.fastOutSlowIn);
   }
 
   // send message
@@ -146,7 +146,7 @@ class _ChatPageState extends State<ChatPage> {
   // build message input
   Widget _buildUserInput() {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 50.0),
+      padding: const EdgeInsets.only(bottom: 17.0),
       child: Row(
         children: [
           // textfield should take up most of the space
